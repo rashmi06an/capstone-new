@@ -6,8 +6,20 @@ const signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
+    // Validation
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Name, email, and password are required' });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+
+    // Password validation
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long' });
     }
 
     const existingUser = await prisma.user.findUnique({
@@ -42,7 +54,21 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    
+    // Handle Prisma unique constraint errors
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+    
+    // Handle validation errors
+    if (error.name === 'PrismaClientValidationError') {
+      return res.status(400).json({ error: 'Invalid data provided' });
+    }
+    
+    res.status(500).json({ 
+      error: error.message || 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
@@ -66,6 +92,11 @@ const login = async (req, res) => {
 
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not set in environment variables');
+      return res.status(500).json({ error: 'Server configuration error' });
     }
 
     const token = jwt.sign(

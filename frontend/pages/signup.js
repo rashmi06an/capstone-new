@@ -21,16 +21,29 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const response = await authAPI.signup(formData);
-      // Auto login after signup
-      const loginResponse = await authAPI.login({
-        email: formData.email,
-        password: formData.password,
-      });
-      setAuthToken(loginResponse.data.token);
-      router.push('/dashboard');
+      // First, try to signup
+      const signupResponse = await authAPI.signup(formData);
+      
+      // If signup succeeds, try to auto-login
+      try {
+        const loginResponse = await authAPI.login({
+          email: formData.email,
+          password: formData.password,
+        });
+        setAuthToken(loginResponse.data.token);
+        router.push('/dashboard');
+      } catch (loginErr) {
+        // Signup succeeded but login failed - redirect to login page
+        setError('Account created successfully! Please login.');
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000);
+      }
     } catch (err) {
-      setError(err.response?.data?.error || 'Signup failed');
+      // Signup failed
+      const errorMessage = err.response?.data?.error || err.message || 'Signup failed. Please try again.';
+      setError(errorMessage);
+      console.error('Signup error:', err);
     } finally {
       setLoading(false);
     }
