@@ -32,5 +32,6 @@ Thumbs.db
 *.swo
 
 # Prisma
-backend/prisma/migrations/
+# Note: Migration files should be committed, but migration history can be ignored if needed
+# backend/prisma/migrations/ - Commented out to allow migration files to be committed
 
