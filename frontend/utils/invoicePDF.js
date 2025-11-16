@@ -41,7 +41,11 @@ export const generateInvoicePDF = (invoice) => {
   
   // Status
   doc.setFontSize(12);
-  doc.setTextColor(invoice.status === 'paid' ? 0, 150, 0 : 200, 0, 0);
+  if (invoice.status === 'paid') {
+    doc.setTextColor(0, 150, 0); // Green for paid
+  } else {
+    doc.setTextColor(200, 0, 0); // Red for unpaid
+  }
   doc.text(`Status: ${invoice.status.toUpperCase()}`, 20, finalY + 10);
   
   // Save
