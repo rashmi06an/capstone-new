@@ -91,7 +91,7 @@ export default function Analytics() {
       {
         data: [
           analytics.tasks.completed,
-          analytics.tasks.inProgress,
+          analytics.tasks.inProgressTasks || 0,
           analytics.tasks.pending,
         ],
         backgroundColor: ['#10b981', '#3b82f6', '#6b7280'],
