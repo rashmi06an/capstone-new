@@ -23,7 +23,9 @@ export default function Login() {
       setAuthToken(response.data.token);
       router.push('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      const errorMessage = err.response?.data?.error || err.message || 'Login failed. Please check if the backend server is running.';
+      setError(errorMessage);
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }
