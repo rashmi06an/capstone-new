@@ -49,6 +49,12 @@ export default function Analytics() {
       setAnalytics(response.data);
     } catch (error) {
       console.error('Error fetching analytics:', error);
+      setAnalytics({
+        income: { total: 0, pending: 0, trend: [] },
+        projects: { total: 0, completed: 0, ongoing: 0 },
+        tasks: { total: 0, completed: 0, pending: 0, inProgress: 0 },
+        productivity: { completionRate: 0, projectCompletionRate: 0 },
+      });
     } finally {
       setLoading(false);
     }
@@ -63,11 +69,11 @@ export default function Analytics() {
   }
 
   const incomeChartData = {
-    labels: analytics.income.trend.map((item) => item.month),
+    labels: analytics.income?.trend?.map((item) => item.month) || [],
     datasets: [
       {
         label: 'Monthly Income',
-        data: analytics.income.trend.map((item) => item.amount),
+        data: analytics.income?.trend?.map((item) => item.amount) || [],
         borderColor: '#00f0ff',
         backgroundColor: 'rgba(0, 240, 255, 0.1)',
         tension: 0.4,
@@ -79,7 +85,10 @@ export default function Analytics() {
     labels: ['Completed', 'Ongoing'],
     datasets: [
       {
-        data: [analytics.projects.completed, analytics.projects.ongoing],
+        data: [
+          analytics.projects?.completed || 0, 
+          analytics.projects?.ongoing || 0
+        ],
         backgroundColor: ['#10b981', '#3b82f6'],
       },
     ],
@@ -90,9 +99,9 @@ export default function Analytics() {
     datasets: [
       {
         data: [
-          analytics.tasks.completed,
-          analytics.tasks.inProgress || 0,
-          analytics.tasks.pending,
+          analytics.tasks?.completed || 0,
+          analytics.tasks?.inProgress || 0,
+          analytics.tasks?.pending || 0,
         ],
         backgroundColor: ['#10b981', '#3b82f6', '#6b7280'],
       },
@@ -131,25 +140,25 @@ export default function Analytics() {
           <div className="glass-card">
             <h3 className="text-gray-400 text-sm mb-2">Total Income</h3>
             <p className="text-3xl font-bold text-neon-blue">
-              ${analytics.income.total.toFixed(2)}
+              ${(analytics.income?.total || 0).toFixed(2)}
             </p>
           </div>
           <div className="glass-card">
             <h3 className="text-gray-400 text-sm mb-2">Pending Payments</h3>
             <p className="text-3xl font-bold text-yellow-400">
-              ${analytics.income.pending.toFixed(2)}
+              ${(analytics.income?.pending || 0).toFixed(2)}
             </p>
           </div>
           <div className="glass-card">
             <h3 className="text-gray-400 text-sm mb-2">Task Completion Rate</h3>
             <p className="text-3xl font-bold text-green-400">
-              {analytics.productivity.completionRate.toFixed(1)}%
+              {(analytics.productivity?.completionRate || 0).toFixed(1)}%
             </p>
           </div>
           <div className="glass-card">
             <h3 className="text-gray-400 text-sm mb-2">Project Completion Rate</h3>
             <p className="text-3xl font-bold text-silver">
-              {analytics.productivity.projectCompletionRate.toFixed(1)}%
+              {(analytics.productivity?.projectCompletionRate || 0).toFixed(1)}%
             </p>
           </div>
         </div>

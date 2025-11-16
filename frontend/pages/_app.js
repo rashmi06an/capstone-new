@@ -9,6 +9,8 @@ function MyApp({ Component, pageProps }) {
   const publicRoutes = ['/', '/login', '/signup'];
 
   useEffect(() => {
+    if (!router.isReady) return;
+
     const token = getAuthToken();
     const isPublicRoute = publicRoutes.includes(router.pathname);
 
@@ -17,9 +19,9 @@ function MyApp({ Component, pageProps }) {
     } else {
       setLoading(false);
     }
-  }, [router.pathname]);
+  }, [router.isReady, router.pathname]);
 
-  if (loading) {
+  if (loading || !router.isReady) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900">
         <div className="text-neon-blue text-xl">Loading...</div>

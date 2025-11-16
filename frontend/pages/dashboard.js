@@ -24,15 +24,23 @@ export default function Dashboard() {
       ]);
 
       setStats({
-        income: analytics.data.income,
-        projects: analytics.data.projects,
-        tasks: analytics.data.tasks,
-        recentProjects: projects.data.projects,
-        recentTasks: tasks.data.tasks,
-        recentInvoices: invoices.data.invoices,
+        income: analytics.data.income || { total: 0, pending: 0 },
+        projects: analytics.data.projects || { total: 0, completed: 0, ongoing: 0 },
+        tasks: analytics.data.tasks || { total: 0, completed: 0, pending: 0 },
+        recentProjects: projects.data?.projects || [],
+        recentTasks: tasks.data?.tasks || [],
+        recentInvoices: invoices.data?.invoices || [],
       });
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      setStats({
+        income: { total: 0, pending: 0 },
+        projects: { total: 0, completed: 0, ongoing: 0 },
+        tasks: { total: 0, completed: 0, pending: 0 },
+        recentProjects: [],
+        recentTasks: [],
+        recentInvoices: [],
+      });
     } finally {
       setLoading(false);
     }
@@ -84,56 +92,68 @@ export default function Dashboard() {
           <div className="glass-card">
             <h2 className="text-xl font-bold mb-4 text-silver">Recent Projects</h2>
             <div className="space-y-3">
-              {stats.recentProjects?.map((project) => (
-                <div key={project.id} className="border-b border-gray-700 pb-3">
-                  <p className="font-semibold">{project.title}</p>
-                  <p className="text-sm text-gray-400">
-                    {project.client.name} • ${project.budget}
-                  </p>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    project.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
-                  }`}>
-                    {project.status}
-                  </span>
-                </div>
-              ))}
+              {stats.recentProjects && stats.recentProjects.length > 0 ? (
+                stats.recentProjects.map((project) => (
+                  <div key={project.id} className="border-b border-gray-700 pb-3">
+                    <p className="font-semibold">{project.title}</p>
+                    <p className="text-sm text-gray-400">
+                      {project.client?.name} • ${project.budget}
+                    </p>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      project.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'
+                    }`}>
+                      {project.status}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm">No projects yet</p>
+              )}
             </div>
           </div>
 
           <div className="glass-card">
             <h2 className="text-xl font-bold mb-4 text-silver">Recent Tasks</h2>
             <div className="space-y-3">
-              {stats.recentTasks?.map((task) => (
-                <div key={task.id} className="border-b border-gray-700 pb-3">
-                  <p className="font-semibold">{task.title}</p>
-                  <p className="text-sm text-gray-400">{task.project.title}</p>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    task.status === 'completed' ? 'bg-green-500' : 
-                    task.status === 'in-progress' ? 'bg-blue-500' : 'bg-gray-500'
-                  }`}>
-                    {task.status}
-                  </span>
-                </div>
-              ))}
+              {stats.recentTasks && stats.recentTasks.length > 0 ? (
+                stats.recentTasks.map((task) => (
+                  <div key={task.id} className="border-b border-gray-700 pb-3">
+                    <p className="font-semibold">{task.title}</p>
+                    <p className="text-sm text-gray-400">{task.project?.title}</p>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      task.status === 'completed' ? 'bg-green-500' : 
+                      task.status === 'in-progress' ? 'bg-blue-500' : 'bg-gray-500'
+                    }`}>
+                      {task.status}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm">No tasks yet</p>
+              )}
             </div>
           </div>
 
           <div className="glass-card">
             <h2 className="text-xl font-bold mb-4 text-silver">Recent Invoices</h2>
             <div className="space-y-3">
-              {stats.recentInvoices?.map((invoice) => (
-                <div key={invoice.id} className="border-b border-gray-700 pb-3">
-                  <p className="font-semibold">{invoice.invoiceId}</p>
-                  <p className="text-sm text-gray-400">
-                    {invoice.client.name} • ${invoice.amount}
-                  </p>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    invoice.status === 'paid' ? 'bg-green-500' : 'bg-red-500'
-                  }`}>
-                    {invoice.status}
-                  </span>
-                </div>
-              ))}
+              {stats.recentInvoices && stats.recentInvoices.length > 0 ? (
+                stats.recentInvoices.map((invoice) => (
+                  <div key={invoice.id} className="border-b border-gray-700 pb-3">
+                    <p className="font-semibold">{invoice.invoiceId}</p>
+                    <p className="text-sm text-gray-400">
+                      {invoice.client?.name} • ${invoice.amount}
+                    </p>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      invoice.status === 'paid' ? 'bg-green-500' : 'bg-red-500'
+                    }`}>
+                      {invoice.status}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm">No invoices yet</p>
+              )}
             </div>
           </div>
         </div>
