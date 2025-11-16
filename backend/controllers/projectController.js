@@ -18,8 +18,8 @@ const getAllProjects = async (req, res) => {
     
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { client: { name: { contains: search, mode: 'insensitive' } } }
+        { title: { contains: search } },
+        { client: { name: { contains: search } } }
       ];
     }
     

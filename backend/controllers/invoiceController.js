@@ -24,8 +24,8 @@ const getAllInvoices = async (req, res) => {
     
     if (search) {
       where.OR = [
-        { invoiceId: { contains: search, mode: 'insensitive' } },
-        { client: { name: { contains: search, mode: 'insensitive' } } }
+        { invoiceId: { contains: search } },
+        { client: { name: { contains: search } } }
       ];
     }
     

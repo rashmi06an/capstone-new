@@ -19,8 +19,8 @@ const getAllClients = async (req, res) => {
     
     if (search) {
       where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { company: { contains: search, mode: 'insensitive' } }
+        { name: { contains: search } },
+        { company: { contains: search } }
       ];
     }
     
