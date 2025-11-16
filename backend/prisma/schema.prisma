@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("Freelancer") // Freelancer or Admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects Project[]
+  tasks    Task[]
+
+  @@map("users")
+}
+
+model Client {
+  id          Int      @id @default(autoincrement())
+  name        String
+  company     String?
+  email       String
+  phone       String?
+  industry    String?
+  region      String?
+  paymentStatus String @default("Pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projects Project[]
+  invoices Invoice[]
+
+  @@map("clients")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  budget      Float
+  deadline    DateTime
+  status      String   @default("ongoing") // ongoing, completed, cancelled
+  clientId    Int
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  client   Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id])
+  tasks    Task[]
+  invoices Invoice[]
+
+  @@map("projects")
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  status      String   @default("pending") // pending, in-progress, completed
+  priority    String   @default("medium") // low, medium, high
+  dueDate     DateTime?
+  projectId   Int
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("tasks")
+}
+
+model Invoice {
+  id          Int      @id @default(autoincrement())
+  invoiceId   String   @unique
+  amount      Float
+  issueDate   DateTime @default(now())
+  dueDate     DateTime
+  status      String   @default("unpaid") // paid, unpaid
+  clientId    Int
+  projectId   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  client  Client  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("invoices")
+}
+
