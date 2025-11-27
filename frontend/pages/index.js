@@ -513,129 +513,16 @@ export default function Home() {
               <div className="absolute -bottom-10 -left-10 w-16 h-16 bg-silver/20 rounded-full blur-xl animate-pulse delay-1000"></div>
               
               <div className="relative z-10">
-                {/* Toggle Buttons */}
-                <div className="flex bg-gray-800/50 rounded-xl p-1 mb-8">
-                  <button 
-                    className="auth-tab active flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300"
-                    data-tab="login"
-                  >
-                    Sign In
-                  </button>
-                  <button 
-                    className="auth-tab flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300"
-                    data-tab="signup"
-                  >
-                    Sign Up
-                  </button>
+
+         
                 </div>
-
-                {/* Login Form */}
-                <div className="auth-form active" id="login-form">
-                  <div className="space-y-6">
-                    <div className="relative">
-                      <input 
-                        type="email" 
-                        placeholder="Email Address"
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-neon-blue focus:ring-2 focus:ring-neon-blue/20 transition-all duration-200"
-                      />
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                        </svg>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <input 
-                        type="password" 
-                        placeholder="Password"
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-neon-blue focus:ring-2 focus:ring-neon-blue/20 transition-all duration-200"
-                      />
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <Link href="/dashboard" className="w-full bg-gradient-to-r from-neon-blue to-neon-blue/80 text-black font-semibold py-4 px-6 rounded-xl hover:from-neon-blue/90 hover:to-neon-blue/70 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-neon-blue/25 block text-center">
-                      Sign In
-          </Link>
-
-                    <div className="text-center">
-                      <a href="#" className="text-gray-400 hover:text-neon-blue transition-colors duration-200 text-sm">
-                        Forgot your password?
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Signup Form */}
-                <div className="auth-form" id="signup-form">
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          placeholder="First Name"
-                          className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-silver focus:ring-2 focus:ring-silver/20 transition-all duration-200"
-                        />
-                      </div>
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          placeholder="Last Name"
-                          className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-silver focus:ring-2 focus:ring-silver/20 transition-all duration-200"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <input 
-                        type="email" 
-                        placeholder="Email Address"
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-silver focus:ring-2 focus:ring-silver/20 transition-all duration-200"
-                      />
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                        </svg>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <input 
-                        type="password" 
-                        placeholder="Create Password"
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-silver focus:ring-2 focus:ring-silver/20 transition-all duration-200"
-                      />
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                      </div>
-                    </div>
-
                     <Link href="/dashboard" className="w-full bg-gradient-to-r from-silver to-silver/80 text-black font-semibold py-4 px-6 rounded-xl hover:from-silver/90 hover:to-silver/70 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-silver/25 block text-center">
                       Create Account
           </Link>
-
-                    <div className="text-center">
-                      <p className="text-gray-400 text-sm">
-                        By signing up, you agree to our 
-                        <a href="#" className="text-silver hover:text-white transition-colors duration-200"> Terms of Service</a>
-                      </p>
-                    </div>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-
       {/* Footer */}
       <footer className="relative z-10 py-8 px-6 border-t border-gray-800">
         <div className="max-w-7xl mx-auto text-center">

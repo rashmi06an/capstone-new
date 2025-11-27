@@ -38,3 +38,275 @@ body {
   @apply bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-neon-blue;
 }
 
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out 0.2s both;
+}
+
+/* Enhanced glass effect */
+.glass-card {
+  @apply glass rounded-lg p-6 shadow-lg;
+  box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.1);
+}
+
+.glass-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.2);
+}
+
+/* Additional animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Gradient text animations */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Enhanced button hover effects */
+.btn-primary:hover {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 0 30px rgba(192, 192, 192, 0.4);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Animated Auth Section Styles */
+.auth-container {
+  position: relative;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-tab {
+  color: #9ca3af;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.auth-tab.active {
+  color: #000;
+  background: linear-gradient(135deg, #00f0ff, #c0c0c0);
+}
+
+.auth-form {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.auth-form.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Input focus animations */
+.auth-form input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 240, 255, 0.1);
+}
+
+/* Button hover animations */
+.auth-form button:hover,
+.auth-form a:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 240, 255, 0.3);
+}
+
+/* Freelancer Journey Animation */
+.freelancer-journey-container {
+  position: relative;
+}
+
+/* Fade in with delay animation */
+@keyframes fade-in-delayed {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in-delayed 1s ease-out 2s both;
+}
+
+/* Transformation sequence */
+.stressed-freelancer {
+  animation: stress-to-success 6s ease-in-out infinite;
+}
+
+.happy-freelancer {
+  animation: success-appear 6s ease-in-out infinite;
+}
+
+.transformation-arrow {
+  animation: arrow-appear 6s ease-in-out infinite;
+}
+
+.journey-label {
+  animation: label-fade 6s ease-in-out infinite;
+}
+
+.journey-label-after {
+  animation: label-after-fade 6s ease-in-out infinite;
+}
+
+@keyframes stress-to-success {
+  0%, 40% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50%, 100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes success-appear {
+  0%, 50% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  60%, 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes arrow-appear {
+  0%, 30% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  40%, 60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+@keyframes label-fade {
+  0%, 40% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes label-after-fade {
+  0%, 50% {
+    opacity: 0;
+  }
+  60%, 100% {
+    opacity: 1;
+  }
+}
+
+/* Enhanced bounce for stress indicators */
+@keyframes stress-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-10px) rotate(10deg);
+  }
+  60% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+}
+
+/* Success celebration animation */
+@keyframes celebrate {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(3deg);
+  }
+}
+
