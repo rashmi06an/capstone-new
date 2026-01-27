@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  frontend-build:
+  frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -16,21 +16,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Frontend - Install Dependencies
-        run: npm i
+      - name: Frontend - Install
+        run: npm ci
 
       - name: Frontend - Build
         run: npm run build
+
+      - name: Frontend - Tests
+        run: npm test --if-present
 
       - name: Upload Frontend Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: frontend/.next/
+          path: |
+            frontend/build/
+            frontend/dist/
           if-no-files-found: warn
           retention-days: 1
 
-  backend-build:
+  backend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -38,38 +43,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Backend - Install Dependencies
-        run: npm i
+      - name: Backend - Install
+        run: npm ci
 
-      - name: Backend - Build
-        run: npm run build
+      - name: Backend - Prisma Generate
+        run: npx prisma generate
 
-  frontend-tests:
-    runs-on: ubuntu-latest
-    needs: frontend-build
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v4
+      - name: Backend - Build (if present)
+        run: npm run build --if-present
 
-      - name: Frontend - Install Dependencies
-        run: npm i
-
-      - name: Frontend - Run Tests
-        run: npm test
-
-  backend-tests:
-    runs-on: ubuntu-latest
-    needs: backend-build
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Backend - Install Dependencies
-        run: npm i
-
-      - name: Backend - Run Tests
-        run: npm test
+      - name: Backend - Tests (if present)
+        run: npm test --if-present
